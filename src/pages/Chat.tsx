@@ -1,6 +1,10 @@
+import Navbar from "../components/Navbar"
+
 const Chat = () => {
   return (
-    <div>Chat</div>
+    <div>
+        <Navbar />
+    </div>
   )
 }
 

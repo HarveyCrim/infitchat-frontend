@@ -1,6 +1,9 @@
 const ChatWindow = () => {
   return (
-    <div className="w-[65%]">ChatWindow</div>
+    <div className="w-[70%]">
+        ChatWindow
+        {/* also use params */}
+    </div>
   )
 }
 
