@@ -3,13 +3,14 @@ import Loaders from './Loaders'
 import { useEffect } from 'react'
 import { createUserRequest } from '../api/userApi'
 import { useNavigate } from 'react-router-dom'
-
+import { toast } from 'sonner';
 const AuthCallback = () => {
   const {isLoading, user} = useAuth0()
   const {userData, createUserFn} = createUserRequest()
   const navigate = useNavigate()
   useEffect(() => {
     if(userData){
+        toast.success("Login successful.")
         navigate("/")
     }
     if(user){
@@ -20,10 +21,7 @@ const AuthCallback = () => {
   if(isLoading || !userData){
     return <Loaders />
   }
-
-  return (
-    <div>AuthCallback</div>
-  )
+  return <></>
 }
 
 export default AuthCallback

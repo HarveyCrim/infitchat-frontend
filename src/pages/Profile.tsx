@@ -5,6 +5,7 @@ import { getUserRequest, updateUserRequest } from '../api/userApi';
 import Loaders from '../components/Loaders';
 import { FaUserCircle } from "react-icons/fa";
 import {useRef, useState } from 'react';
+
 const Profile = () => {
   const fileRef = useRef(null)
   const {userData, findingUser} = getUserRequest()
@@ -41,10 +42,11 @@ const Profile = () => {
         reader.readAsDataURL(file)
     }
   }
-
+  
   if(findingUser || isUpdating || picload){
     return <><Loaders /></>
   }
+
   return (
     <>
         <Navbar />
@@ -54,7 +56,6 @@ const Profile = () => {
                 <FaUserCircle className = "z-10" size = {180}/>
                 <div onClick = {() => {((fileRef.current as unknown) as HTMLInputElement).click()}} className='cursor-pointer hover:bg-gray-100 absolute right-[10px] border-2 rounded-full p-2 bg-white z-20 bottom-[0px]'>
                     <MdEdit size = {30} className='fill-red-400'/>
-                    <Avatar sx = {{width: "200px", height: "200px" ,border: "5px solid gray"}} src = {userData.profile_pic}/>
                 </div>
                 
             </div>}

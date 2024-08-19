@@ -24,6 +24,77 @@ export const getUserRequest = () => {
     })
     return {userData, findingUser}
 }
+///friend-request/respond
+
+export const friendRequestHandler = () => {
+    const client = useQueryClient()
+    const {mutateAsync: handleFriendRequest, isPending: handlingFriendRequest, data: FriendRequestResponse} = useMutation({
+        mutationFn: async (info:{sender: string, decision: string}) => {
+            const resp = await axios({
+                method: "post",
+                url: backend_url+"api/user/friend-request/respond",
+                data: info,
+                headers: {
+                    Authorization: JSON.parse(localStorage.getItem("token") as string)
+                }
+            })
+            return resp.data
+        },
+        onSuccess : () => {
+            client.invalidateQueries({queryKey: ["getUser"]})
+        }
+    })
+    return {handleFriendRequest, handlingFriendRequest, FriendRequestResponse}
+}
+
+export const FriendRequest = () => {
+    const {mutateAsync: sendRequest, data: requestSent, isPending: requestSending} = useMutation({
+        mutationFn: async ({id} : {id: string}) => {
+            console.log("sent")
+            const resp = await axios({
+                method: "get",
+                url: backend_url+"api/user/sendRequest/"+id,
+                headers: {
+                    Authorization: JSON.parse(localStorage.getItem("token") as string)
+                }
+            })
+            return resp.data
+        }
+    })
+    return {sendRequest, requestSending, requestSent}
+}
+
+export const addedOrNot = () => {
+    const {mutateAsync: findFriendOrNot, isPending: findingFriendOrNot, data: foundFriendOrNot} = useMutation({
+        mutationFn: async (_id: string) => {
+            const resp = await axios({
+                method: "get",
+                url: backend_url+"api/user/friendOrNot/"+_id,
+                headers: {
+                    Authorization: JSON.parse(localStorage.getItem("token") as string)
+                }
+            })
+            return resp.data
+        }
+    })
+    return {findFriendOrNot, findingFriendOrNot, foundFriendOrNot}
+}
+
+export const getUsername = () => {
+    const {data, isPending: fetchingUser, mutateAsync: fetchUser} = useMutation({
+        mutationFn: async ({email}: {email: string}) => {
+            const resp = await axios({
+                method: "get",
+                url:backend_url+"api/user/specific/"+email,
+                headers: {
+                    Authorization: JSON.parse(localStorage.getItem("token") as string)
+                }
+            })
+            return resp.data
+        }
+    })
+    return {fetchUser, fetchingUser, data}
+}
 
 export const updateUserRequest = () => {
     const client = useQueryClient()
