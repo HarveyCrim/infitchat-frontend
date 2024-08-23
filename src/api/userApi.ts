@@ -1,5 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
+import { useSelector } from "react-redux"
+import { IRootState } from "../redux/store"
 const backend_url = import.meta.env.VITE_BACKEND_URL
 
 type user = {
@@ -13,6 +15,8 @@ export const getUserRequest = () => {
         queryKey: ["getUser"],
         queryFn: async () => {
             const token = JSON.parse(localStorage.getItem("token") as string)
+            if(!token)
+                return null
             const resp = await axios({
                 url: backend_url+"api/user/current",
                 headers: {
@@ -24,9 +28,9 @@ export const getUserRequest = () => {
     })
     return {userData, findingUser}
 }
-///friend-request/respond
 
 export const friendRequestHandler = () => {
+    const socket = useSelector<IRootState, any>(state => state.userReducer.socket)
     const client = useQueryClient()
     const {mutateAsync: handleFriendRequest, isPending: handlingFriendRequest, data: FriendRequestResponse} = useMutation({
         mutationFn: async (info:{sender: string, decision: string}) => {
@@ -40,7 +44,10 @@ export const friendRequestHandler = () => {
             })
             return resp.data
         },
-        onSuccess : () => {
+        onSuccess : (data) => {
+            if(data.message == "accepted"){
+                socket.emit("friendRequestAccepted", data)
+            }
             client.invalidateQueries({queryKey: ["getUser"]})
         }
     })
@@ -48,9 +55,9 @@ export const friendRequestHandler = () => {
 }
 
 export const FriendRequest = () => {
+    const socket = useSelector<IRootState, any>(state => state.userReducer.socket)
     const {mutateAsync: sendRequest, data: requestSent, isPending: requestSending} = useMutation({
         mutationFn: async ({id} : {id: string}) => {
-            console.log("sent")
             const resp = await axios({
                 method: "get",
                 url: backend_url+"api/user/sendRequest/"+id,
@@ -59,7 +66,15 @@ export const FriendRequest = () => {
                 }
             })
             return resp.data
-        }
+        },
+        onSuccess(data) {
+            if(data.message == "added"){
+                socket.emit("notificationSent", {to: data.to, type: "request", action: "increase"})
+            }
+            else if(data.message == "removed"){
+                socket.emit("notificationSent", {to: data.to, type: "request", action: "decrease"})
+            }
+        },
     })
     return {sendRequest, requestSending, requestSent}
 }

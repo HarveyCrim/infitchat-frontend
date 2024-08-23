@@ -11,6 +11,7 @@ const AuthCallback = () => {
   useEffect(() => {
     if(userData){
         toast.success("Login successful.")
+        console.log("in here")
         navigate("/")
     }
     if(user){

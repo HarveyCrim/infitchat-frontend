@@ -6,16 +6,20 @@ import { FaPeopleGroup } from "react-icons/fa6";
 import { useAuth0 } from "@auth0/auth0-react";
 import Loaders from "./Loaders";
 import { useNavigate } from "react-router-dom";
-import { useDispatch} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { switchAddFriendMenu, switchNotificationMenu } from "../redux/appStateSlice";
 import { Link } from "react-router-dom";
+import { getUserRequest } from "../api/userApi";
+import { IRootState } from "../redux/store";
 
 
 const Navbar = () => {
   const {isAuthenticated, logout, loginWithRedirect, isLoading} = useAuth0()
+  const {userData, findingUser} = getUserRequest()
+  const socket = useSelector<IRootState, any>(state => state.userReducer.socket)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  if(isLoading){
+  if(isLoading || findingUser){
     return <Loaders />
   }
   return (
@@ -31,9 +35,15 @@ const Navbar = () => {
                     loginWithRedirect()
                 }
             }} size = {20} className="fill-white cursor-pointer"/>
-            <IoIosNotifications onClick = {() => dispatch(switchNotificationMenu(true))} size = {30} className="fill-white cursor-pointer"/>
+            <div className="relative">
+                <IoIosNotifications onClick = {() => dispatch(switchNotificationMenu(true))} size = {30} className="fill-white cursor-pointer"/>
+                {userData?.notifications.length > 0 && <div className="absolute right-[-5px] top-[17px] bg-black text-white text-xs rounded-full px-1.5 py-0.5">
+                    <span>{userData.notifications.length}</span>
+                </div>}
+            </div>
             <IoIosLogOut onClick = {() => {
                 localStorage.removeItem("token")
+                socket.disconnect()
                 logout()}} size = {30} className="fill-white cursor-pointer"/>
             <FaPeopleGroup size = {30} className="fill-white cursor-pointer"/>
         </div>}

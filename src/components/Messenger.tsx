@@ -3,7 +3,7 @@ import Sidebar from "./Sidebar"
 
 const Messenger = () => {
   return (
-    <div className="flex max-h-[calc(100vh-80px)]">
+    <div className="flex h-full">
         <div className="w-[35%]"> 
             <Sidebar />
         </div>
