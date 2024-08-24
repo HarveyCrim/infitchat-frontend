@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Socket } from "socket.io-client";
 type initial = {
-    socket: any | null,
+    socket: Socket | null,
 }
 
 const initialState: initial = {
     socket:null,
+
 }
 
 const userSlice = createSlice({
@@ -18,4 +20,4 @@ const userSlice = createSlice({
 })
 
 export default userSlice.reducer
-export const {setSocket} = userSlice.actions
+export const {setSocket,} = userSlice.actions

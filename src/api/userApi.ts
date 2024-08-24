@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
-import { useSelector } from "react-redux"
 import { IRootState } from "../redux/store"
+import { useSelector } from "react-redux"
 const backend_url = import.meta.env.VITE_BACKEND_URL
 
 type user = {
@@ -136,6 +136,7 @@ export const updateUserRequest = () => {
 export const createUserRequest = () => {
     const {data: userData, mutateAsync: createUserFn, isPending: creatingUser} = useMutation({
         mutationFn: async (userInfo: user) => {
+            console.log("create")
             const resp = await axios({
                 method: "post",
                 url: backend_url+"api/user/create",
@@ -144,7 +145,9 @@ export const createUserRequest = () => {
             return resp.data
         },
         onSuccess: (data) => {
+
             localStorage.setItem("token", JSON.stringify(data.token))
+            
         }
     })
     return {userData, createUserFn, creatingUser}

@@ -5,7 +5,7 @@ import SidebarCard from "./SidebarCard"
 const Sidebar = () => {
   const {userData, findingUser} = getUserRequest()
   return (
-    <div className="border h-[100%]">
+    <div className="h-[100%] overflow-y-hidden border-r border-gray-400">
         <div className="bg-gray-100 w-full flex justify-center items-center py-3">
             <div className="w-[75%]">
                 <Searchbox />

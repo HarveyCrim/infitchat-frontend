@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react"
+import { lazy, Suspense,  } from "react"
 import { BrowserRouter, Routes, Route} from "react-router-dom"
 import Loaders from "./components/Loaders"
 import SecureRoutes from "./pages/SecureRoutes"
@@ -17,8 +17,10 @@ const Home = lazy(() => import("./pages/Home"))
 function App() {
   const addMenu = useSelector<IRootState, boolean>( state => state.appStateReducer.addFriendMenu)
   const notificationMenu = useSelector<IRootState, boolean>(state => state.appStateReducer.notificationMenu)
+ 
   return (
-    <div className="h-[100vh] relative">
+   
+    <div className="min-h-[100vh] relative">
     { addMenu && <AddMenu />}
     {notificationMenu && <NotificationMenu />}
     <Toaster position="top-center"/>
@@ -36,6 +38,7 @@ function App() {
       </AuthProvider>
     </BrowserRouter>
     </div>
+    
   )
 }
 

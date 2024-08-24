@@ -8,14 +8,16 @@ const AuthCallback = () => {
   const {isLoading, user} = useAuth0()
   const {userData, createUserFn} = createUserRequest()
   const navigate = useNavigate()
+  console.log("user", userData)
   useEffect(() => {
     if(userData){
         toast.success("Login successful.")
-        console.log("in here")
-        navigate("/")
+        console.log(userData)
+        navigate("/chat/home")
     }
     if(user){
         createUserFn({name: user.name!, email: user.email!})
+        
     }
   }, [user, isLoading, userData])
 

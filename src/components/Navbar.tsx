@@ -6,17 +6,17 @@ import { FaPeopleGroup } from "react-icons/fa6";
 import { useAuth0 } from "@auth0/auth0-react";
 import Loaders from "./Loaders";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, } from "react-redux";
 import { switchAddFriendMenu, switchNotificationMenu } from "../redux/appStateSlice";
 import { Link } from "react-router-dom";
 import { getUserRequest } from "../api/userApi";
-import { IRootState } from "../redux/store";
+// import { IRootState } from "../redux/store";
 
 
 const Navbar = () => {
   const {isAuthenticated, logout, loginWithRedirect, isLoading} = useAuth0()
   const {userData, findingUser} = getUserRequest()
-  const socket = useSelector<IRootState, any>(state => state.userReducer.socket)
+//   const socket = useSelector<IRootState, any>(state => state.userReducer.socket)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   if(isLoading || findingUser){
@@ -43,7 +43,6 @@ const Navbar = () => {
             </div>
             <IoIosLogOut onClick = {() => {
                 localStorage.removeItem("token")
-                socket.disconnect()
                 logout()}} size = {30} className="fill-white cursor-pointer"/>
             <FaPeopleGroup size = {30} className="fill-white cursor-pointer"/>
         </div>}
