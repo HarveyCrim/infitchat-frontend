@@ -4,7 +4,7 @@ import { IoIosAdd } from "react-icons/io";
 import { addedOrNot, FriendRequest } from "../api/userApi";
 import { useEffect } from "react";
 import { SpinnerDotted } from "spinners-react";
-const UserSearchCard = ({profile_pic, name, username, id}: {id: string, profile_pic?: string, name: string, username: string}) => {
+const UserSearchCard = ({sender, profile_pic, name, username, id}: {sender: string, id: string, profile_pic?: string, name: string, username: string}) => {
   const {sendRequest, requestSending, requestSent} = FriendRequest()
   const {findFriendOrNot, findingFriendOrNot, foundFriendOrNot} = addedOrNot()
   useEffect(() => {
@@ -24,8 +24,8 @@ const UserSearchCard = ({profile_pic, name, username, id}: {id: string, profile_
         <div className="cursor-pointer hover:bg-red-500 flex items-center bg-red-400 text-white border-2 h-[30px] p-2 rounded-lg">
             {foundFriendOrNot?.message == false && <IoIosAdd size = {20}/>}
             {(findingFriendOrNot || requestSending) && <SpinnerDotted color= {"rgb(248 113 113)"} size = {20}/>}
-            {foundFriendOrNot?.message == false && <span onClick={() => sendRequest({id})}>Add</span>}
-            {foundFriendOrNot?.message && <span onClick={() => sendRequest({id})}>Added</span>}
+            {foundFriendOrNot?.message == false && <span onClick={() => sendRequest({id, sender})}>Add</span>}
+            {foundFriendOrNot?.message && <span onClick={() => sendRequest({id, sender})}>Added</span>}
         </div>
     </div>
   )

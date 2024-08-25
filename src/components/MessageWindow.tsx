@@ -2,14 +2,13 @@ import { useEffect, useRef, useState } from "react"
 import { fetchConvo, sendMessage } from "../api/convoApi"
 import {  useParams } from "react-router-dom"
 import { getUserRequest } from "../api/userApi"
-// import { useSelector } from "react-redux"
-// import { IRootState } from "../redux/store"
 import { RiAttachment2 } from "react-icons/ri";
 import { useSocketContext } from "../context/socketContext"
 import Message from "./Message"
 import { IoSendSharp } from "react-icons/io5"
 import { MdEmojiEmotions } from "react-icons/md"
 import { FaPlus } from "react-icons/fa";
+// import { useQueryClient } from "@tanstack/react-query";
 // import socket from "../socket"
 
 // type message = {
@@ -22,6 +21,7 @@ const MessageWindow = () => {
   const [fetchedMessages, setFetchedMessages] = useState<any[] >([])
   const {chatId} = useParams()
   const {userData} = getUserRequest()
+//   const client = useQueryClient()
   const divRef = useRef<HTMLDivElement>(null)
   const {messageSent, sendClicked} = sendMessage()
   const [payload, setPayload] = useState<string>("")
@@ -83,7 +83,7 @@ const MessageWindow = () => {
             </div>}
             
         </div>
-        <div className="h-[10%] w-[100%] flex items-center justify-between px-10">
+        <div className="h-[10%] w-[100%] flex items-center justify-between px-10 space-x-3">
             <div className="w-[20%] flex w-fit space-x-2">
                 <MdEmojiEmotions size = {30} className="hover:cursor-pointer hover:fill-gray-500"/>
                 <RiAttachment2 size = {30} className="hover:cursor-pointer hover:fill-gray-500"/>

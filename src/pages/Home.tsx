@@ -6,6 +6,7 @@ const Home = () => {
   const {isAuthenticated} = useAuth0()
   
   return (
+
     <div className="border-2 h-screen">
       <Navbar /> 
        {!isAuthenticated && <DefaultHome />} 

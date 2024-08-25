@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
-import { IRootState } from "../redux/store"
-import { useSelector } from "react-redux"
+import { useSocketContext } from "../context/socketContext"
 const backend_url = import.meta.env.VITE_BACKEND_URL
 
 type user = {
@@ -30,7 +29,7 @@ export const getUserRequest = () => {
 }
 
 export const friendRequestHandler = () => {
-    const socket = useSelector<IRootState, any>(state => state.userReducer.socket)
+    const socket = useSocketContext()!
     const client = useQueryClient()
     const {mutateAsync: handleFriendRequest, isPending: handlingFriendRequest, data: FriendRequestResponse} = useMutation({
         mutationFn: async (info:{sender: string, decision: string}) => {
@@ -55,12 +54,12 @@ export const friendRequestHandler = () => {
 }
 
 export const FriendRequest = () => {
-    const socket = useSelector<IRootState, any>(state => state.userReducer.socket)
+    const socket = useSocketContext()!
     const {mutateAsync: sendRequest, data: requestSent, isPending: requestSending} = useMutation({
-        mutationFn: async ({id} : {id: string}) => {
+        mutationFn: async ({id, sender} : {id: string, sender: string}) => {
             const resp = await axios({
                 method: "get",
-                url: backend_url+"api/user/sendRequest/"+id,
+                url: backend_url+"api/user/sendRequest/"+id+"/"+sender,
                 headers: {
                     Authorization: JSON.parse(localStorage.getItem("token") as string)
                 }

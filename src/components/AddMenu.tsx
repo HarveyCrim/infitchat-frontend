@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { IoSearchSharp } from "react-icons/io5";
-import { getUsername } from "../api/userApi";
+import { getUsername, getUserRequest } from "../api/userApi";
 import { SpinnerDotted } from "spinners-react";
 import UserSearchCard from "./UserSearchCard";
 import { switchAddFriendMenu } from "../redux/appStateSlice";
@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 const AddMenu = () => {
   const [name, setName] = useState<string>("")
   const {data, fetchUser, fetchingUser} = getUsername()
+  const {userData} = getUserRequest()
   console.log(data)
   const menuRef = useRef<HTMLDivElement>(null)
   const dispatch = useDispatch()
@@ -44,7 +45,7 @@ const AddMenu = () => {
         </div>
         <div className="min-h-[50px] flex items-center justify-center mt-[10px]"> 
             {(!data && !fetchingUser) && <h1 className="text-center">No Results.</h1>}
-            {data && <UserSearchCard id = {data._id} profile_pic= {data.profile_pic ? data.profile_pic : null} name={data.name} username={data.email}/>}
+            {data && <UserSearchCard sender = {userData?._id} id = {data._id} profile_pic= {data.profile_pic ? data.profile_pic : null} name={data.name} username={data.email}/>}
             {fetchingUser && <SpinnerDotted color= {"rgb(248 113 113)"} size = {20}/>}
         </div>
     </div>

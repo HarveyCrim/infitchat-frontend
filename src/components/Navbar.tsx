@@ -16,7 +16,6 @@ import { getUserRequest } from "../api/userApi";
 const Navbar = () => {
   const {isAuthenticated, logout, loginWithRedirect, isLoading} = useAuth0()
   const {userData, findingUser} = getUserRequest()
-//   const socket = useSelector<IRootState, any>(state => state.userReducer.socket)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   if(isLoading || findingUser){
