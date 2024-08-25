@@ -24,19 +24,18 @@ function App() {
   useEffect(() => {
     socket.on("notificationReceived", (data: any) => {
       if(data.type == "request"){
-        console.log("working")
         client.invalidateQueries({queryKey: ["getUser"]})
       }
     })
 
-    socket.on("accept_Effect", (data) => {
-     console.log("listen")
+    socket.on("accept_Effect", () => {
       client.invalidateQueries({queryKey: ["getUser"]})
     })
 
     return () => {
       socket.off("notificationReceived")
       socket.off("accept_Effect")
+
     }
   })
   return (

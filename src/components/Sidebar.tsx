@@ -17,7 +17,7 @@ const Sidebar = () => {
         {userData && <div className="h-full scrollbar-thin scrollbar-thumb-gray-500 overflow-y-scroll">
             {
                 userData?.friends.map((item: any, index: number) => {
-                    return <SidebarCard key = {index} id = {item._id.toString()} name={item.name} lastMessage="Godliness is the truth" profile_pic={item.profile_pic} unread={3}/>
+                    return <SidebarCard isOnline = {item.isOnline} key = {index} id = {item._id.toString()} name={item.name} lastMessage="Godliness is the truth" profile_pic={item.profile_pic} unread={3}/>
                 })
             }
         </div>}
