@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { fetchConvo, sendMessage } from "../api/convoApi"
+import { fetchConvo, messageReceivedInactive, sendMessage } from "../api/convoApi"
 import {  useParams } from "react-router-dom"
 import { getUserRequest } from "../api/userApi"
 import { RiAttachment2 } from "react-icons/ri";
@@ -8,20 +8,12 @@ import Message from "./Message"
 import { IoSendSharp } from "react-icons/io5"
 import { MdEmojiEmotions } from "react-icons/md"
 import { FaPlus } from "react-icons/fa";
-// import { useQueryClient } from "@tanstack/react-query";
-// import socket from "../socket"
-
-// type message = {
-//     sender: string,
-//     text: string
-// }
 
 const MessageWindow = () => {
   const socket = useSocketContext()!
   const [fetchedMessages, setFetchedMessages] = useState<any[] >([])
   const {chatId} = useParams()
   const {userData} = getUserRequest()
-//   const client = useQueryClient()
   const divRef = useRef<HTMLDivElement>(null)
   const {messageSent, sendClicked} = sendMessage()
   const [payload, setPayload] = useState<string>("")
@@ -36,20 +28,27 @@ const MessageWindow = () => {
   }, [chatId, userData])
 
   useEffect(() => {
+    socket.on("messageReceived", async (data) => {
+        if(chatId !== data.sender){
+            await messageReceivedInactive(data)
+        }
+        else{
+            if(fetchedMessages?.length > 0)
+                setFetchedMessages([...fetchedMessages, data.message])
+            else
+                setFetchedMessages([data.message])
+        }
+    })
     if(chatId == "home")
         return
     divRef.current?.scrollIntoView({
         behavior: "smooth",
         block: "end"
     })
-    socket.on("messageReceived", (data) => {
-        if(fetchedMessages?.length > 0)
-            setFetchedMessages([...fetchedMessages, data.message])
-        else
-        setFetchedMessages([data.message])
-    })
+    
     return () => {
         socket.off("messageReceived")
+        console.log("OFF")
     }
   })
 

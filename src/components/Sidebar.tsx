@@ -18,7 +18,7 @@ const Sidebar = () => {
             {
                 userData?.friends.map((item: any, index: number) => {
                     console.log(item)
-                    return <SidebarCard  isOnline = {item.friendId.isOnline} key = {index} id = {item.friendId?._id} name={item.friendId.name} lastMessage={item.lastMessage ? item.lastMessage.text:""} lastMessageByYou = {item.lastMessage && item.lastMessage.sender.toString() === userData?._id.toString()} profile_pic={item.friendId.profile_pic} unread={3}/>
+                    return <SidebarCard sender = {userData?._id} isOnline = {item.friendId.isOnline} key = {index} id = {item.friendId?._id} name={item.friendId.name} lastMessage={item.lastMessage ? item.lastMessage.text:""} lastMessageByYou = {item.lastMessage && item.lastMessage.sender.toString() === userData?._id.toString()} profile_pic={item.friendId.profile_pic} unread={item.unread.length}/>
                 })
             }
         </div>}

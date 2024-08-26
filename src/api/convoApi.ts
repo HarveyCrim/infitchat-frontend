@@ -14,6 +14,31 @@ type messageType = {
     receiver: string,
     message: message
 }
+
+export const messageReceivedInactive = async (data: any) => {
+    const resp = await axios({
+        method: "post",
+        url: backend_url+"api/convo/unread",
+        data,
+        headers: {
+            Authorization: JSON.parse(localStorage.getItem("token") as string)
+        }
+    })
+    return resp.data
+}
+
+export const removeUnread = async (data: {sender: string, receiver: string}) => {
+    const resp = await axios({
+        method: "put",
+        url: backend_url+"api/convo/remove-unread",
+        data,
+        headers: {
+            Authorization: JSON.parse(localStorage.getItem("token") as string)
+        }
+    })
+    return resp.data
+}
+
 export const sendMessage = () => {
     const socket = useSocketContext()!
     const {mutateAsync: sendClicked, isPending: messageSending, data: messageSent} = useMutation({
