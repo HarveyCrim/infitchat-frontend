@@ -36,7 +36,6 @@ export const sendMessage = () => {
 }
 
 export const fetchConvo = async (data: {sender: string, receiver: string}) => {
-    console.log("info", data)
     const resp = await axios({
         method: "post",
         url: backend_url+"api/convo/convo",
@@ -45,6 +44,5 @@ export const fetchConvo = async (data: {sender: string, receiver: string}) => {
             Authorization: JSON.parse(localStorage.getItem("token") as string)
         }
     })
-    console.log("datafetch", resp.data)
     return resp.data
 }

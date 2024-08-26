@@ -63,7 +63,6 @@ const MessageWindow = () => {
      setPayload("")
     }
   }, [messageSent])
-  console.log("fetched", fetchedMessages)
   if(chatId === "home"){
     return (<div className="flex items-center justify-center h-[100%]">
         <h1 className="text-2xl text-gray-500">Select a friend to begin chat.</h1>
