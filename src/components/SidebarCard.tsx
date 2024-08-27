@@ -13,6 +13,8 @@ const SidebarCard = ({sender, lastMessageByYou, isOnline, profile_pic, id, name,
   const {chatId} = useParams()
   const picked = location.pathname.substring(6)
   const socket = useSocketContext()!
+  console.log(messageLast, "lastMessage")
+  console.log(lastSender, "lastMessageByYou")
   useEffect(() => {
     console.log("on")
     if(chatId === id && notSeen > 0){

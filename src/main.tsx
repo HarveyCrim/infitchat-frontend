@@ -19,9 +19,7 @@ createRoot(document.getElementById('root')!).render(
   <SocketProvider backend_url={import.meta.env.VITE_BACKEND_URL}>
     <QueryClientProvider client={client}>
       <Provider store = {store}>
-        <StrictMode>
           <App />
-        </StrictMode>,
       </Provider>
   </QueryClientProvider>
   </SocketProvider>

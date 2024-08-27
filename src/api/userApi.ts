@@ -10,7 +10,7 @@ type user = {
 }
 
 export const getUserRequest = () => {
-    const {data: userData, isPending: findingUser} = useQuery({
+    const {data: userData, isPending: findingUser, refetch} = useQuery({
         queryKey: ["getUser"],
         queryFn: async () => {
             const token = JSON.parse(localStorage.getItem("token") as string)
@@ -25,7 +25,7 @@ export const getUserRequest = () => {
             return resp.data
         }
     })
-    return {userData, findingUser}
+    return {userData, findingUser, refetch}
 }
 
 export const friendRequestHandler = () => {
