@@ -18,7 +18,7 @@ type messageType = {
 export const messageReceivedInactive = async (data: any) => {
     const resp = await axios({
         method: "post",
-        url: backend_url+"api/convo/unread",
+        url: backend_url+"/api/convo/unread",
         data,
         headers: {
             Authorization: JSON.parse(localStorage.getItem("token") as string)
@@ -30,7 +30,7 @@ export const messageReceivedInactive = async (data: any) => {
 export const removeUnread = async (data: {sender: string, receiver: string}) => {
     const resp = await axios({
         method: "put",
-        url: backend_url+"api/convo/remove-unread",
+        url: backend_url+"/api/convo/remove-unread",
         data,
         headers: {
             Authorization: JSON.parse(localStorage.getItem("token") as string)
@@ -45,7 +45,7 @@ export const sendMessage = () => {
         mutationFn: async (data: messageType) => {
             const resp = await axios({
                 method: "post",
-                url: backend_url+"api/convo/create",
+                url: backend_url+"/api/convo/create",
                 data,
                 headers: {
                     Authorization: JSON.parse(localStorage.getItem("token") as string)
@@ -63,7 +63,7 @@ export const sendMessage = () => {
 export const fetchConvo = async (data: {sender: string, receiver: string}) => {
     const resp = await axios({
         method: "post",
-        url: backend_url+"api/convo/convo",
+        url: backend_url+"/api/convo/convo",
         data,
         headers: {
             Authorization: JSON.parse(localStorage.getItem("token") as string)

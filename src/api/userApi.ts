@@ -17,7 +17,7 @@ export const getUserRequest = () => {
             if(!token)
                 return null
             const resp = await axios({
-                url: backend_url+"api/user/current",
+                url: backend_url+"/api/user/current",
                 headers: {
                     Authorization: token
                 }
@@ -35,7 +35,7 @@ export const friendRequestHandler = () => {
         mutationFn: async (info:{sender: string, decision: string}) => {
             const resp = await axios({
                 method: "post",
-                url: backend_url+"api/user/friend-request/respond",
+                url: backend_url+"/api/user/friend-request/respond",
                 data: info,
                 headers: {
                     Authorization: JSON.parse(localStorage.getItem("token") as string)
@@ -59,7 +59,7 @@ export const FriendRequest = () => {
         mutationFn: async ({id, sender} : {id: string, sender: string}) => {
             const resp = await axios({
                 method: "get",
-                url: backend_url+"api/user/sendRequest/"+id+"/"+sender,
+                url: backend_url+"/api/user/sendRequest/"+id+"/"+sender,
                 headers: {
                     Authorization: JSON.parse(localStorage.getItem("token") as string)
                 }
@@ -83,7 +83,7 @@ export const addedOrNot = () => {
         mutationFn: async (_id: string) => {
             const resp = await axios({
                 method: "get",
-                url: backend_url+"api/user/friendOrNot/"+_id,
+                url: backend_url+"/api/user/friendOrNot/"+_id,
                 headers: {
                     Authorization: JSON.parse(localStorage.getItem("token") as string)
                 }
@@ -99,7 +99,7 @@ export const getUsername = () => {
         mutationFn: async ({email}: {email: string}) => {
             const resp = await axios({
                 method: "get",
-                url:backend_url+"api/user/specific/"+email,
+                url:backend_url+"/api/user/specific/"+email,
                 headers: {
                     Authorization: JSON.parse(localStorage.getItem("token") as string)
                 }
@@ -117,7 +117,7 @@ export const updateUserRequest = () => {
             const resp = await axios({
                 method: "put",
                 data: {profile_pic},
-                url: backend_url+"api/user/update",
+                url: backend_url+"/api/user/update",
                 headers: {
                     Authorization: JSON.parse(localStorage.getItem("token") as string)
                 }
@@ -138,7 +138,7 @@ export const createUserRequest = () => {
             console.log("create")
             const resp = await axios({
                 method: "post",
-                url: backend_url+"api/user/create",
+                url: backend_url+"/api/user/create",
                 data: userInfo
             })
             return resp.data
