@@ -33,7 +33,7 @@ const Sidebar = () => {
         </div>}
         {filter === "" && userData && <div className="h-full scrollbar-thin scrollbar-thumb-gray-500 overflow-y-scroll">
             {
-                userData?.friends.map((item: any, index: number) => {
+                userData?.friends.map((item: any) => {
                     console.log(item)
                     return <SidebarCard sender = {userData?._id} isOnline = {item.friendId.isOnline} key = {item.friendId?._id} id = {item.friendId?._id} name={item.friendId.name} lastMessage={item.lastMessage ? item.lastMessage.text:""} lastMessageByYou = {item.lastMessage && item.lastMessage.sender.toString() === userData?._id.toString()} profile_pic={item.friendId.profile_pic} unread={item.unread.length}/>
                 })
@@ -41,7 +41,7 @@ const Sidebar = () => {
         </div>}
         {filter !== "" && filteredFriends && <div className="h-full scrollbar-thin scrollbar-thumb-gray-500 overflow-y-scroll">
             {
-                filteredFriends.map((item: any, index: number) => {
+                filteredFriends.map((item: any) => {
                     console.log(item)
                     return <SidebarCard sender = {userData?._id} isOnline = {item.friendId.isOnline} key = {item.friendId._id} id = {item.friendId?._id} name={item.friendId.name} lastMessage={item.lastMessage ? item.lastMessage.text:""} lastMessageByYou = {item.lastMessage && item.lastMessage.sender.toString() === userData?._id.toString()} profile_pic={item.friendId.profile_pic} unread={item.unread.length}/>
                 })
