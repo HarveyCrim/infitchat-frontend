@@ -10,6 +10,7 @@ const AuthCallback = () => {
   const {userData, createUserFn, creatingUser} = createUserRequest()
   const socket = useSocketContext()
   const navigate = useNavigate()
+  console.log("dat", userData)
   useEffect(() => {
     if(userData){
         socket?.emit("connectionMade", userData?._id)

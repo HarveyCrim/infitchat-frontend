@@ -133,6 +133,7 @@ export const updateUserRequest = () => {
 }
 
 export const createUserRequest = () => {
+    console.log(backend_url+"/api/user/create",)
     const {data: userData, mutateAsync: createUserFn, isPending: creatingUser} = useMutation({
         mutationFn: async (userInfo: user) => {
             console.log("create")
@@ -144,7 +145,7 @@ export const createUserRequest = () => {
             return resp.data
         },
         onSuccess: (data) => {
-
+            console.log("set")
             localStorage.setItem("token", JSON.stringify(data.token))
             
         }
